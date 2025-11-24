@@ -5,11 +5,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <limits>
-
 using namespace std;
 
-void inputData(float* const p, int n){
+void inputData(float* const p, const int n){
     while (true) {
         cout << "Enter values:  ";
         string s;
@@ -28,8 +26,7 @@ void inputData(float* const p, int n){
                 break;
             }
         }
-        float one_more;
-        if (exit && ss >> one_more) {
+        if (char one_more; exit && ss >> one_more) {
             cout << "Wrong input, try again" << endl;
             exit = false;
         }
@@ -37,7 +34,7 @@ void inputData(float* const p, int n){
     }
 }
 
-float average(const float* p, int n) {
+float average(const float* p, const int n) {
     float avg = 0.0;
     for (int i = 0; i < n; i++) {
         avg += *(p + i);
@@ -66,7 +63,7 @@ float maxValue(const float* p, int n) {
 }
 
 float* filterAboveAverage(const float* p, int n, int& newCount) {
-    float avg = average(p, n);
+    const float avg = average(p, n);
     newCount = 0;
     for (int i = 0; i < n; i++) {
         if (*(p + i) > avg) {
@@ -87,14 +84,23 @@ float* filterAboveAverage(const float* p, int n, int& newCount) {
 int main() {
     int n;
     cout << "=== Sensor analysis ===" << endl;
-    cout << "Enter the number of measurements: ";
-    cin >> n;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    string input;
+    while (true) {
+        cout << "Enter the number of measurements: ";
+        getline(cin, input);
+        if (stringstream ss(input); ss >> n && ss.eof()) {
+            break;
+        }
+        else {
+            cout << "Wrong input, try again" << endl;
+        }
+    }
+
     auto* data = new float[n];
     inputData(data, n);
-    float avg = average(data, n);
-    float min = minValue(data, n);
-    float max = maxValue(data, n);
+    const float avg = average(data, n);
+    const float min = minValue(data, n);
+    const float max = maxValue(data, n);
     int newCount;
     float* aboveAvg = filterAboveAverage(data, n, newCount);
     cout << "Average value is: " << avg << endl;
