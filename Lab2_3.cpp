@@ -39,7 +39,7 @@ float average(const float* p, const int n) {
     for (int i = 0; i < n; i++) {
         avg += *(p + i);
     }
-    return (avg / static_cast<float>(n));    // Важно
+    return avg / static_cast<float>(n);    // Важно
 }
 
 float minValue(const float* p, int n) {
